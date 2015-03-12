@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/jieter/leaflet-clonelayer",
   "devDependencies": {
-    "eslint": "^0.16.2"
+    "eslint": "^0.16.2",
+    "mversion": "^1.10.0"
   }
 }

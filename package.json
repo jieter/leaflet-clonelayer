@@ -1,0 +1,28 @@
+{
+  "name": "leaflet-clonelayer",
+  "version": "1.0.0",
+  "description": "Clone leaflet layers",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint index.js",
+    "release": "mversion patch -m"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jieter/leaflet-clonelayer.git"
+  },
+  "keywords": [
+    "leaflet",
+    "clone",
+    "layer"
+  ],
+  "author": "Jan Pieter Waagmeester <jieter@jieter.nl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jieter/leaflet-clonelayer/issues"
+  },
+  "homepage": "https://github.com/jieter/leaflet-clonelayer",
+  "devDependencies": {
+    "eslint": "^0.16.2"
+  }
+}

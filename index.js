@@ -39,7 +39,7 @@ function cloneLayer(layer) {
 		return L.geoJson(layer.toGeoJSON(), options);
 	}
 
-	//
+	// layer/feature groups
 	if (layer instanceof L.LayerGroup || layer instanceof L.FeatureGroup) {
 		var layergroup = L.layerGroup();
 		layer.eachLayer(function (inner) {
@@ -48,7 +48,7 @@ function cloneLayer(layer) {
 		return layergroup;
 	}
 
-	reaise "Unknown layer, cannot clone";
+	throw 'Unknown layer, cannot clone this layer';
 }
 
 module.exports = cloneLayer;

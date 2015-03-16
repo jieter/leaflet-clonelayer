@@ -11,10 +11,16 @@ if (typeof window === 'undefined') {
 }
 
 
+/*
+ * Clones `layer` and
+ * - tests if the cloned layer is instanceof `instance`
+ * - checks if _leaflet_id's are not the same.
+ * - checks if options are the same.
+ */
 function testCloneLayer(instance, layer) {
 	var cloned = cloneLayer(layer);
 
-	it('should be a L.TileLayer', function () {
+	it('should clone to specified instance', function () {
 		cloned.should.be.an.instanceof(instance);
 	});
 	it('should not have the same _leaflet_id', function () {
@@ -23,6 +29,8 @@ function testCloneLayer(instance, layer) {
 	it('should have the same options', function () {
 		layer.options.should.deep.equal(cloned.options);
 	});
+	/* eslint no-console: 0 */
+	console.log(L.stamp(layer), L.stamp(cloned));
 	return cloned;
 }
 
@@ -68,7 +76,37 @@ describe('leaflet-cloneLayer', function () {
 		var cloned = testCloneLayer(L.Polyline, layer);
 
 		it('should have the same latlngs', function () {
-			cloned._latlngs.should.be.deep.equal(layer._latlngs);
+			cloned.getLatLngs().should.be.deep.equal(layer.getLatLngs());
+		});
+	});
+
+	describe('L.Polygon', function () {
+		var latlngs = [[52, 4], [52, 5], [51, 5]];
+		var options = {
+			color: '#f00',
+			fillColor: '#0f0'
+		};
+
+		var layer = L.polygon(latlngs, options);
+		var cloned = testCloneLayer(L.Polygon, layer);
+
+		it('should have the same latlngs', function () {
+			cloned.getLatLngs().should.be.deep.equal(layer.getLatLngs());
+		});
+	});
+
+	describe('L.Rectangle', function () {
+		var bounds = [[4, 51], [5, 52]];
+		var options = {
+			color: '#f00',
+			fillColor: '#0f0'
+		};
+
+		var layer = L.rectangle(bounds, options);
+		var cloned = testCloneLayer(L.Rectangle, layer);
+
+		it('should have the same bounds', function () {
+			cloned.getBounds().should.be.deep.equal(layer.getBounds());
 		});
 	});
 
@@ -99,4 +137,6 @@ describe('leaflet-cloneLayer', function () {
 			cloned.toGeoJSON().should.deep.equal(geojson);
 		});
 	});
+
+
 });

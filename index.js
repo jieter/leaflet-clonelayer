@@ -18,7 +18,10 @@ function cloneLayer(layer) {
 	}
 
 	// Vector layers
-	if (layer instanceof L.Polygon || layer instanceof L.Rectangle) {
+	if (layer instanceof L.Rectangle) {
+		return L.rectangle(layer.getBounds(), options);
+	}
+	if (layer instanceof L.Polygon) {
 		return L.polygon(layer.getLatLngs(), options);
 	}
 	if (layer instanceof L.Polyline) {

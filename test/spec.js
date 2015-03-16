@@ -10,6 +10,22 @@ if (typeof window === 'undefined') {
 	var cloneLayer = require('../index.js');
 }
 
+
+function testCloneLayer(instance, layer) {
+	var cloned = cloneLayer(layer);
+
+	it('should be a L.TileLayer', function () {
+		cloned.should.be.an.instanceof(instance);
+	});
+	it('should not have the same _leaflet_id', function () {
+		L.stamp(layer).should.not.equal(L.stamp(cloned));
+	});
+	it('should have the same options', function () {
+		layer.options.should.deep.equal(cloned.options);
+	});
+	return cloned;
+}
+
 /* globals describe: true, it: true */
 describe('leaflet-cloneLayer', function () {
 	chai.should();
@@ -20,18 +36,11 @@ describe('leaflet-cloneLayer', function () {
 			minZoom: 1,
 			maxZoom: 18
 		};
-		var orig = L.tileLayer(url, options);
-		var cloned = cloneLayer(orig);
+		var layer = L.tileLayer(url, options);
+		var cloned = testCloneLayer(L.TileLayer, layer);
 
-		it('should be a L.TileLayer', function () {
-			cloned.should.be.an.instanceof(L.TileLayer);
-		});
-		it('should have the same url and options', function () {
+		it('should have the same url', function () {
 			cloned._url.should.equal(url);
-			orig.options.should.deep.equal(cloned.options);
-		});
-		it('should not have the same _leaflet_id', function () {
-			L.stamp(orig).should.not.equal(L.stamp(cloned));
 		});
 	});
 
@@ -40,19 +49,11 @@ describe('leaflet-cloneLayer', function () {
 		var options = {
 			clickable: false
 		};
-		var orig = L.marker(latlng, options);
-		var cloned = cloneLayer(orig);
+		var layer = L.marker(latlng, options);
+		var cloned = testCloneLayer(L.Marker, layer);
 
-		it('should be a L.Marker', function () {
-			cloned.should.be.an.instanceof(L.Marker);
-		});
-		it('should have the same latlng and options', function () {
-			cloned._latlng.should.be.near(latlng);
-
-			orig.options.should.deep.equal(cloned.options);
-		});
-		it('should not have the same _leaflet_id', function () {
-			L.stamp(orig).should.not.equal(L.stamp(cloned));
+		it('should have the same latlng', function () {
+			cloned.getLatLng().should.be.near(latlng);
 		});
 	});
 
@@ -63,19 +64,39 @@ describe('leaflet-cloneLayer', function () {
 			fillColor: '#0f0'
 		};
 
-		var orig = L.polyline(latlngs, options);
-		var cloned = cloneLayer(orig);
+		var layer = L.polyline(latlngs, options);
+		var cloned = testCloneLayer(L.Polyline, layer);
 
-		it('should be a L.Polyline', function () {
-			cloned.should.be.an.instanceof(L.Polyline);
+		it('should have the same latlngs', function () {
+			cloned._latlngs.should.be.deep.equal(layer._latlngs);
 		});
-		it('should have the same latlngs and options', function () {
-			cloned._latlngs.should.be.deep.equal(orig._latlngs);
+	});
 
-			orig.options.should.deep.equal(cloned.options);
+	describe('L.Circle', function () {
+		var latlng = [52, 4];
+		var radius = 400;
+		var options = {
+			color: '#f00',
+			fillColor: '#0f0'
+		};
+
+		var layer = L.circle(latlng, radius, options);
+		var cloned = testCloneLayer(L.Circle, layer);
+
+		it('should have the same latlng and radius', function () {
+			cloned.getLatLng().should.be.near(latlng);
+			cloned.getRadius().should.be.equal(radius);
 		});
-		it('should not have the same _leaflet_id', function () {
-			L.stamp(orig).should.not.equal(L.stamp(cloned));
+	});
+
+	describe('L.GeoJSON', function () {
+		var geojson = JSON.parse('{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"foo":"bar"},"geometry":{"type":"Point","coordinates":[2.63671875,65.87472467098549]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-14.765625,-3.864254615721396]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[4.74609375,45.706179285330855]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[-13.18359375,46.437856895024225],[-8.96484375,49.83798245308484],[-5.09765625,43.83452678223684],[-30.41015625,38.272688535980976],[-32.34375,55.87531083569679],[-42.01171875,54.97761367069625],[-62.22656249999999,30.751277776257812]]}},{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[-13.0078125,12.039320557540584],[-13.0078125,39.36827914916014],[16.5234375,29.99300228455108],[9.4921875,12.039320557540584],[-13.0078125,12.039320557540584]]]}}]}');
+
+		var layer = L.geoJson(geojson);
+		var cloned = testCloneLayer(L.GeoJSON, layer);
+
+		it('should convert to equal geojson', function () {
+			cloned.toGeoJSON().should.deep.equal(geojson);
 		});
 	});
 });

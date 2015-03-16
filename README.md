@@ -1,6 +1,6 @@
 # leaflet-clonelayer
 
-Leaflet layer objects cannot be used accros different maps in one javascript runtime.
+Leaflet layer instances cannot be added to different maps in one javascript runtime.
 `leaflet-clonelayer` clones layers to allow reuse.
 
 ## Example

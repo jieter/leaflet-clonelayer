@@ -13,7 +13,7 @@ var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map1);
 
 var clonedLayer = cloneLayer(layer);
-// Now we can add safely add it to another map
+// Now we can safely add it to another map
 cloneLayer.addTo(map2);
 ```
 

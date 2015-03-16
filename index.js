@@ -51,4 +51,6 @@ function cloneLayer(layer) {
 	throw 'Unknown layer, cannot clone this layer';
 }
 
-module.exports = cloneLayer;
+if (typeof exports === 'object') {
+	module.exports = cloneLayer;
+}

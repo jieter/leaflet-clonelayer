@@ -1,0 +1,31 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>leaflet-clonelayer Tests</title>
+	<link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+</head>
+<body>
+	<div id="mocha"></div>
+
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+	<script src="../node_modules/chai/chai.js"></script>
+	<script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai-leaflet/chai-leaflet.js"></script>
+    
+	<script src="../index.js"></script>
+
+	<script>
+		mocha.setup('bdd');
+	</script>
+
+	<script src="spec.js"></script>
+
+	<script>
+		mocha.globals(['L']);
+		(window.mochaPhantomJS || mocha).run();
+	</script>
+</body>
+</html>

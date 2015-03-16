@@ -23,6 +23,7 @@
     "define": false
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "amd": true
   }
 }

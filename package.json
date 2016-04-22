@@ -4,9 +4,10 @@
   "description": "Clone leaflet layers",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js test/spec.js",
-    "test": "npm run lint && npm run test-browser",
-    "test-browser": "mocha-phantomjs test/index.html",
+    "lint": "eslint index.js test/spec.js test/index.html",
+    "test": "npm run lint && npm run test-node && npm run test-browser",
+    "test-browser": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html",
+    "test-node": "mocha test/spec.js",
     "release": "mversion patch -m"
   },
   "repository": {
@@ -25,12 +26,14 @@
   },
   "homepage": "https://github.com/jieter/leaflet-clonelayer",
   "devDependencies": {
-    "chai": "^2.1.2",
-    "chai-leaflet": "0.0.10",
-    "eslint": "^0.16.2",
-    "mocha": "^2.2.1",
-    "mocha-phantomjs": "^3.5.3",
+    "chai": "^3.5.0",
+    "chai-leaflet": "0.0.11",
+    "eslint": "^2.7.0",
+    "eslint-plugin-html": "^1.4.0",
+    "leaflet-headless": "^0.1.1",
+    "mocha": "^2.4.5",
+    "mocha-phantomjs-core": "^2.0.1",
     "mversion": "^1.10.0",
-    "phantomjs": "^1.9.16"
+    "phantomjs-prebuilt": "^2.1.4"
   }
 }

@@ -12,15 +12,15 @@ if (typeof window === 'undefined') {
 
 /*
  * Clones `layer` and
- * - tests if the cloned layer is instanceof `instance`
+ * - tests if the cloned layer is instanceof `klass`
  * - checks if _leaflet_id's are not the same.
  * - checks if options are the same.
  */
-function testCloneLayer (instance, layer) {
+function testCloneLayer (klass, layer) {
     var cloned = cloneLayer(layer);
 
-    it('should clone to specified instance', function () {
-        cloned.should.be.an.instanceof(instance);
+    it('should clone to specified klass', function () {
+        cloned.should.be.an.instanceof(klass);
     });
     it('should not have the same _leaflet_id', function () {
         L.stamp(layer).should.not.equal(L.stamp(cloned));
@@ -136,5 +136,38 @@ describe('leaflet-cloneLayer', function () {
         });
     });
 
+    describe('L.svg', function () {
+        var layer = L.svg({padding: 2});
+        var cloned = testCloneLayer(L.SVG, layer);
+
+        it('should have the defined padding', function () {
+            cloned.options.padding.should.equal(2);
+        });
+    });
+
+    describe('L.canvas', function () {
+        var layer = L.canvas({padding: 4});
+        var cloned = testCloneLayer(L.Canvas, layer);
+
+        it('should have the defined padding', function () {
+            cloned.options.padding.should.equal(4);
+        });
+    });
+
+    describe('L.Polyline with canvas renderer', function () {
+        var latlngs = [[52, 4], [52, 5], [51, 5]];
+        var layer = L.polyline(latlngs, {
+            renderer: L.canvas({padding: 4})
+        });
+
+        var cloned = cloneLayer(layer);
+
+        it('should have a cloned renderer', function () {
+            L.stamp(layer.options.renderer).should.not.equal(
+                L.stamp(cloned.options.renderer)
+            );
+        });
+
+    });
 
 });

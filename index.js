@@ -1,5 +1,24 @@
+function cloneOptions (options) {
+    var ret = {};
+    for (var i in options) {
+        var item = options[i];
+        if (item && item.clone) {
+            ret[i] = item.clone();
+        } else if (item instanceof L.Layer) {
+            ret[i] = cloneLayer(item);
+        } else {
+            ret[i] = item;
+        }
+    }
+    return ret;
+}
+
 function cloneLayer (layer) {
-    var options = layer.options;
+    var options = cloneOptions(layer.options);
+
+    if (layer instanceof L.Renderer) {
+        return (layer instanceof L.SVG) ? L.svg(options) : L.canvas(options);
+    }
 
     // Tile layers
     if (layer instanceof L.TileLayer) {

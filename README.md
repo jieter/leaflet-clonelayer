@@ -3,8 +3,10 @@
 Leaflet layer instances cannot be added to different maps in one javascript runtime.
 `leaflet-clonelayer` clones layers to allow reuse.
 
-- Works with leaflet 0.7.7 and 1.0.1
-- Used in jieter/Leaflet.layerscontrol-minimap
+ - Works with leaflet 0.7.7 and 1.0.3
+ - Also clones a layer's `options` (including renderers)
+ - Used in [jieter/Leaflet.layerscontrol-minimap](https://github.com/jieter/Leaflet.layerscontrol-minimap)
+
 
 ## Example
 

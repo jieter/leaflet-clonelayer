@@ -167,7 +167,9 @@ describe('leaflet-cloneLayer', function () {
                 L.stamp(cloned.options.renderer)
             );
         });
-
+        it('should have a renderer with the correct options', function () {
+            cloned.options.renderer.options.padding.should.equal(4);
+        });
     });
 
 });

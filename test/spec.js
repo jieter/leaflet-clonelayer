@@ -136,40 +136,43 @@ describe('leaflet-cloneLayer', function () {
         });
     });
 
-    describe('L.svg', function () {
-        var layer = L.svg({padding: 2});
-        var cloned = testCloneLayer(L.SVG, layer);
+    // do not run the renderer tests in node. The renderers return null there.
+    var IS_NODE = (typeof process !== 'undefined') && (typeof process.versions.node !== 'undefined');
+    if (!IS_NODE) {
+        describe('L.svg', function () {
+            var layer = L.svg({padding: 2});
+            var cloned = testCloneLayer(L.SVG, layer);
 
-        it('should have the defined padding', function () {
-            cloned.options.padding.should.equal(2);
-        });
-    });
-
-    describe('L.canvas', function () {
-        var layer = L.canvas({padding: 4});
-        var cloned = testCloneLayer(L.Canvas, layer);
-
-        it('should have the defined padding', function () {
-            cloned.options.padding.should.equal(4);
-        });
-    });
-
-    describe('L.Polyline with canvas renderer', function () {
-        var latlngs = [[52, 4], [52, 5], [51, 5]];
-        var layer = L.polyline(latlngs, {
-            renderer: L.canvas({padding: 4})
+            it('should have the defined padding', function () {
+                cloned.options.padding.should.equal(2);
+            });
         });
 
-        var cloned = cloneLayer(layer);
+        describe('L.canvas', function () {
+            var layer = L.canvas({padding: 4});
+            var cloned = testCloneLayer(L.Canvas, layer);
 
-        it('should have a cloned renderer', function () {
-            L.stamp(layer.options.renderer).should.not.equal(
-                L.stamp(cloned.options.renderer)
-            );
+            it('should have the defined padding', function () {
+                cloned.options.padding.should.equal(4);
+            });
         });
-        it('should have a renderer with the correct options', function () {
-            cloned.options.renderer.options.padding.should.equal(4);
-        });
-    });
 
+        describe('L.Polyline with canvas renderer', function () {
+            var latlngs = [[52, 4], [52, 5], [51, 5]];
+            var layer = L.polyline(latlngs, {
+                renderer: L.canvas({padding: 4})
+            });
+
+            var cloned = cloneLayer(layer);
+
+            it('should have a cloned renderer', function () {
+                L.stamp(layer.options.renderer).should.not.equal(
+                    L.stamp(cloned.options.renderer)
+                );
+            });
+            it('should have a renderer with the correct options', function () {
+                cloned.options.renderer.options.padding.should.equal(4);
+            });
+        });
+    }
 });

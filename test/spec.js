@@ -2,6 +2,7 @@ if (typeof window === 'undefined') {
     try {
         var L = require('leaflet-headless');
     } catch (e) {
+        console.log(e);
         throw 'Package leaflet-headless needs to be installed: npm install leaflet-headless';
     }
     var chai = require('chai');

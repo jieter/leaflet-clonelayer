@@ -1,7 +1,7 @@
 ---
 language: node_js
 node_js:
-  - "iojs"
+  - "6.1.x"
 env:
   - CXX=g++-4.8
 before_install:

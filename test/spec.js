@@ -110,18 +110,34 @@ describe('leaflet-cloneLayer', function () {
 
     describe('L.Circle', function () {
         var latlng = [52, 4];
+        var options = {
+            color: '#f00',
+            fillColor: '#0f0',
+            radius: 400
+        };
+
+        var layer = L.circle(latlng, options);
+        var cloned = testCloneLayer(L.Circle, layer);
+
+        it('should have the same latlng', function () {
+            cloned.getLatLng().should.be.near(latlng);
+        });
+    });
+
+    describe('L.CircleMarker', function () {
+        var latlng = [52, 4];
         var radius = 400;
         var options = {
             color: '#f00',
-            fillColor: '#0f0'
+            fillColor: '#0f0',
+            radius: radius
         };
 
-        var layer = L.circle(latlng, radius, options);
-        var cloned = testCloneLayer(L.Circle, layer);
+        var layer = L.circleMarker(latlng, options);
+        var cloned = testCloneLayer(L.CircleMarker, layer);
 
-        it('should have the same latlng and radius', function () {
+        it('should have the same latlng', function () {
             cloned.getLatLng().should.be.near(latlng);
-            cloned.getRadius().should.be.equal(radius);
         });
     });
 

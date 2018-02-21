@@ -143,7 +143,15 @@ describe('leaflet-cloneLayer', function () {
     });
 
     describe('L.GeoJSON', function () {
-        var geojson = JSON.parse('{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"foo":"bar"},"geometry":{"type":"Point","coordinates":[2.63671875,65.87472467098549]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-14.765625,-3.864254615721396]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[4.74609375,45.706179285330855]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[-13.18359375,46.437856895024225],[-8.96484375,49.83798245308484],[-5.09765625,43.83452678223684],[-30.41015625,38.272688535980976],[-32.34375,55.87531083569679],[-42.01171875,54.97761367069625],[-62.22656249999999,30.751277776257812]]}},{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[-13.0078125,12.039320557540584],[-13.0078125,39.36827914916014],[16.5234375,29.99300228455108],[9.4921875,12.039320557540584],[-13.0078125,12.039320557540584]]]}}]}');
+        var geojson = JSON.parse(
+            '{"type":"FeatureCollection","features":[' +
+            '{"type":"Feature","properties":{"foo":"bar"},"geometry":{"type":"Point","coordinates":[2.636718,65.874724]}},' +
+            '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-14.765625,-3.864254]}},' +
+            '{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[4.746093,45.706179]}},' +
+            '{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[-13.183593,46.437856],[-8.964843,49.837982],[-5.097656,43.834526],[-30.410156,38.272688],[-32.34375,55.875310],[-42.011718,54.977613],[-62.226562,30.751277]]}},' +
+            '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[-13.007812,12.039320],[-13.007812,39.368279],[16.523437,29.993002],[9.492187,12.039320],[-13.007812,12.039320]]]}}' +
+            ']}'
+        );
 
         var layer = L.geoJson(geojson);
         var cloned = testCloneLayer(L.GeoJSON, layer);

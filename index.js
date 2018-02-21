@@ -36,6 +36,9 @@ function cloneLayer (layer) {
     }
 
     // Tile layers
+    if (layer instanceof L.TileLayer.WMS) {
+        return L.tileLayer.wms(layer._url, options);
+    }
     if (layer instanceof L.TileLayer) {
         return L.tileLayer(layer._url, options);
     }

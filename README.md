@@ -27,6 +27,9 @@ cloned.addTo(map2);
 
 ## Changelog
 
+### 1.0.5 (2018-02-22)
+ - Added support for `L.TileLayer.WMS` [#5](https://github.com/jieter/leaflet-clonelayer/pull/5) by [@mhasbie](https://github.com/mhasbie)
+
 ### 1.0.4 (2017-01-31)
  - Drop leaflet 0.7.7 support, use leaflet-clonelayer@1.0.2
  - Also clones a layer's `options` (including renderers)

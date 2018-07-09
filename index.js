@@ -35,6 +35,21 @@ function cloneLayer (layer) {
         return L.canvas(options);
     }
 
+    // GoogleMutant GridLayer
+    if (L.GridLayer.GoogleMutant && layer instanceof L.GridLayer.GoogleMutant) {
+        var googleLayer = L.gridLayer.googleMutant(options);
+
+        layer._GAPIPromise.then(function () {
+            var subLayers = Object.keys(layer._subLayers); 
+     
+            for (var i in subLayers) {
+                googleLayer.addGoogleLayer(subLayers[i]);
+            }
+        });
+
+        return googleLayer;
+    }
+
     // Tile layers
     if (layer instanceof L.TileLayer.WMS) {
         return L.tileLayer.wms(layer._url, options);

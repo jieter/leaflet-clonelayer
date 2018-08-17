@@ -87,11 +87,11 @@ function cloneLayer (layer) {
         return L.geoJson(layer.toGeoJSON(), options);
     }
 
+    if (layer instanceof L.FeatureGroup) {
+        return L.featureGroup(cloneInnerLayers(layer));
+    }
     if (layer instanceof L.LayerGroup) {
         return L.layerGroup(cloneInnerLayers(layer));
-    }
-    if (layer instanceof L.FeatureGroup) {
-        return L.FeatureGroup(cloneInnerLayers(layer));
     }
 
     throw 'Unknown layer, cannot clone this layer. Leaflet-version: ' + L.version;

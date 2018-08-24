@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint index.js test/spec.js test/index.html",
     "test": "npm run lint && npm run test-node && npm run test-browser",
-    "test-browser": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html",
+    "test-browser": "mocha-chrome test/index.html",
     "test-node": "mocha test/spec.js",
     "release": "mversion patch -m"
   },
@@ -32,8 +32,7 @@
     "eslint-plugin-html": "^1.4.0",
     "leaflet-headless": "^0.2.6",
     "mocha": "^3.2.0",
-    "mocha-phantomjs-core": "^2.1.1",
-    "mversion": "^1.10.1",
-    "phantomjs-prebuilt": "^2.1.4"
+    "mocha-chrome": "^1.1.0",
+    "mversion": "^1.10.1"
   }
 }

@@ -13,15 +13,15 @@ if (typeof window === 'undefined') {
 
 /*
  * Clones `layer` and
- * - tests if the cloned layer is instanceof `klass`
+ * - tests if the cloned layer is instanceof `expected_class`
  * - checks if _leaflet_id's are not the same.
  * - checks if options are the same.
  */
-function testCloneLayer (klass, layer) {
+function testCloneLayer (expectedClass, layer) {
     var cloned = cloneLayer(layer);
 
-    it('should clone to specified klass', function () {
-        cloned.should.be.an.instanceof(klass);
+    it('should clone to specified expectedClass', function () {
+        cloned.should.be.an.instanceof(expectedClass);
     });
     it('should not have the same _leaflet_id', function () {
         L.stamp(layer).should.not.equal(L.stamp(cloned));
@@ -35,6 +35,7 @@ function testCloneLayer (klass, layer) {
 
 /* globals describe: true, it: true */
 describe('leaflet-cloneLayer', function () {
+    console.log(L.version);
     chai.should();
 
     describe('L.TileLayer', function () {
@@ -160,6 +161,33 @@ describe('leaflet-cloneLayer', function () {
             cloned.toGeoJSON().should.deep.equal(geojson);
         });
     });
+
+    describe('L.LayerGroup', function () {
+        var layer = L.layerGroup([L.marker([52, 4])]);
+        var cloned = testCloneLayer(L.LayerGroup, layer);
+
+        it('should contain a marker', function () {
+            var inner = cloned.getLayers()[0];
+
+            inner.should.be.an.instanceof(L.Marker);
+            inner.getLatLng().lat.should.equal(52);
+            inner.getLatLng().lng.should.equal(4);
+        });
+    });
+
+    describe('L.FeatureGroup', function () {
+        var layer = L.featureGroup([L.marker([52, 4])]);
+        var cloned = testCloneLayer(L.FeatureGroup, layer);
+
+        it('should contain a marker', function () {
+            var inner = cloned.getLayers()[0];
+
+            inner.should.be.an.instanceof(L.Marker);
+            inner.getLatLng().lat.should.equal(52);
+            inner.getLatLng().lng.should.equal(4);;
+        });
+    });
+
 
     // do not run the renderer tests in node. The renderers return null there.
     var IS_NODE = (typeof process !== 'undefined') && (typeof process.versions.node !== 'undefined');
